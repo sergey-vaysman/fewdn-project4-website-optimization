@@ -14,3 +14,10 @@ What's changed in index.html:
 * Created a minified version of font.css. This css is inlined into html file.
 * Created a minified version of style.css. This css is also inlined into html file.
 Also the same changes are added for projects pages.
+
+What's changed in main.js:
+* Use getElementsById and getElementsByClassName instead of querySelector and querySelectorAll respectively.
+* Get objects from document at once, outside loops.
+* Avoid image scalling on page loading.
+* Decrease the number of objects depending on screen resolution.
+
