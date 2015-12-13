@@ -378,7 +378,7 @@ var pizzaElementGenerator = function(i) {
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
   pizzaImageContainer.classList.add("col-md-6");
 
-  pizzaImage.src = "images/pizza.png";
+  pizzaImage.src = "images/pizza_scaled200.png";
   pizzaImage.classList.add("img-responsive");
   pizzaImageContainer.appendChild(pizzaImage);
   pizzaContainer.appendChild(pizzaImageContainer);
@@ -402,7 +402,6 @@ var pizzaElementGenerator = function(i) {
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
-  // TODO: getElementById instead of querySelector
   // Changes the value for the size of the pizza above the slider
   function changeSliderLabel(size) {
     var pizzaSizeDiv = document.getElementById('pizzaSize');
@@ -425,8 +424,6 @@ var resizePizzas = function(size) {
 
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx(elem, size) {
-    console.log("determineDx starting");
-    var dateStart = new Date();
     var oldWidth = elem.offsetWidth;
     var randomPizzasForm = document.getElementById('randomPizzas');
     var windowWidth = randomPizzasForm.offsetWidth;
@@ -450,32 +447,22 @@ var resizePizzas = function(size) {
     var newSize = sizeSwitcher(size);
     var dx = (newSize - oldSize) * windowWidth;
 
-    var dateEnd = new Date();
-    console.log("determineDx ending: " + (dateEnd - dateStart));
     return dx;
   }
 
   // TODO: calculate dx outside for loop (+)
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    console.log("changePizzaSizes starting");
-    var start = new Date();
     randomPizzaContainerArray = 
         document.getElementsByClassName('randomPizzaContainer');
     if (randomPizzaContainerArray != null && 
       randomPizzaContainerArray.length > 0) {
       var dx = determineDx(randomPizzaContainerArray[0], size);
       var newwidth = (randomPizzaContainerArray[0].offsetWidth + dx) + 'px';
-      var dateBeforeLoop = new Date();
       for (var i = 0; i < randomPizzaContainerArray.length; i++) {
         randomPizzaContainerArray[i].style.width = newwidth;
       }
     }
-    var end = new Date();
-    console.log("changePizzaSizes ending:");
-    console.log("before loop: " + (dateBeforeLoop - start));
-    console.log("after loop: " + (end - dateBeforeLoop));
-    console.log("all time: " + (end - start));
   }
 
   changePizzaSizes(size);
@@ -520,26 +507,26 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 var animatedPizzas = null;
 
+var halfScreenWidth = window.innerWidth / 2;
+// TODO: update position without Layout stages
+
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-
-  console.log("starting updatePositions");
-  var dateStart = new Date();
   if (animatedPizzas != null) {
-    var scrollTop = document.body.scrollTop;
-    console.log("scrollTop: " + scrollTop);
-    var scrollTopLoop = scrollTop / 1250;
+    var scrollTopLoop = document.body.scrollTop / 1250;
+    var phases = [];
+    for (var i = 0; i < 5; i++) {
+      phases[i] = 100 * Math.sin(scrollTopLoop + i);
+    }
     for (var i = 0; i < animatedPizzas.length; i++) {
-      var animatedPizza = animatedPizzas[i];
-      var phase = Math.sin(scrollTopLoop + (i % 5));
-      animatedPizza.style.left = animatedPizza.basicLeft + 100 * phase + 'px';
+      animatedPizzas[i].style.transform = 
+        'translateX(' + 
+        parseInt(animatedPizzas[i].basicLeft + phases[i % 5] - halfScreenWidth ) + 
+        'px' + ')';
     }
   }
-  var dateEnd = new Date();
-  console.log("updatePositions length: " + (dateEnd - dateStart));
-
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -552,6 +539,11 @@ function updatePositions() {
 
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
+
+var updateHalfScreenWidth = function() {
+  halfScreenWidth = window.innerWidth / 2;
+}
+window.addEventListener('resize', updateHalfScreenWidth);
 
 /**
  * Returns a number of rows for pizza objects 
@@ -586,8 +578,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    // document.querySelector("#movingPizzas1").appendChild(elem);
-
     movingPizzas1.appendChild(elem);
     animatedPizzas[i] = elem;
   }

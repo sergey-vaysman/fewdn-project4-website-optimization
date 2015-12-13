@@ -17,7 +17,7 @@ Also the same changes are added for projects pages.
 
 What's changed in main.js:
 * Use getElementsById and getElementsByClassName instead of querySelector and querySelectorAll respectively.
-* Get objects from document at once, outside loops.
-* Avoid image scalling on page loading.
+* Get constant object at once, outside loops.
+* Use image compressing and avoid image scalling.
 * Decrease the number of objects depending on screen resolution.
-
+* Avoid Layout step by using style transform instead of left position.
