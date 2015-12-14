@@ -1,0 +1,105 @@
+
+Submit 1
+
+Does Not Meet Specifications
+
+///////////////////////////////////////////////////////////////////////////////
+
+Critical Rendering Path for index.html
+
+SPECIFICATION
+Student identifies and performs optimizations to achieve a Mobile and Desktop PageSpeed score of 90 on index.html.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+The mobile PageSpeed score is consistently below 90.
+The good thing is that it is just one quick fix away.
+You need to remove the render blocking CSS file style.css.
+I suggest inlining the CSS inside the HTML.
+
+Requirements to exceed the specification 
+Student identifies and performs optimizations to achieve a Mobile and Desktop PageSpeed score above 90 on index.html.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Framerate for pizza.html
+
+SPECIFICATION
+Student identifies and performs optimizations ensuring a consistent frame rate at 60fps when scrolling in pizza.html.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+The FPS is as fast as it needs to be. Check out the suggestions in the code review tab.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Computation Efficiency for pizza.html
+
+SPECIFICATION
+Time to resize pizzas is less than 5 ms in pizza.html shown in the browser console.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+The resize speed is quite high, be sure to check out the suggestions inside the Code Review tab.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Build Tools
+
+SPECIFICATION
+Please select "Meets Specifications" if the student does not "Exceed Specifications"
+MEETS SPECIFICATION
+
+Reviewer Comments
+Developer-to-Developer Tip
+You can use JavaScript Task Runners such as Gulp or Grunt to not only deliver production quality codes but also speed up and increase consistency your app developments.
+
+REFERENCES
+
+http://yeoman.io/blog/performance-optimization.html
+https://parall.ax/blog/view/3003/grunt-vs-gulp-js-a-comparison
+
+Gulp
+
+https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
+http://markgoodyear.com/2014/01/getting-started-with-gulp/
+http://alistapart.com/blog/post/getting-started-with-gulp
+https://isimmons.github.io/ (wire up JSHint)
+
+Grunt
+
+http://gruntjs.com/getting-started
+https://scotch.io/tutorials/a-simple-guide-to-getting-started-with-grunt
+http://24ways.org/2013/grunt-is-not-weird-and-hard/
+https://egghead.io/lessons/gruntjs-introduction-to-grunt
+https://www.bento.io/grunt
+p.s. I personally recommend Gulp!
+Requirements to exceed the specification 
+Student researches, identifies and uses build tools to automatically perform optimizations such as minification of CSS and JS and image optimizations.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Comments
+
+SPECIFICATION
+Comments in views/js/main.js for pizza.html are present and effectively explain longer code procedures.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+When you make all the changes inside the main.js file, be sure to comment them to explain their intention.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Documentation
+
+SPECIFICATION
+A README file is included detailing all steps required to successfully run the application and outlines the optimizations that the student made in views/js/main.js for pizza.html.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+For this project, detailing the steps in the README.md file is a requirement. Be sure to add all the steps you took in both index.html and main.js.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Additional Reviewer Comments
+Regarding your concerns on caching, this is configured via headers. This is not actually required for this project, but when you host files in services like AWS S3, you can specify the caching policy of each file.

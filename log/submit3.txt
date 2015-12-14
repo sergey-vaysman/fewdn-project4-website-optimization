@@ -1,0 +1,159 @@
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+./views/main.js:
+
+// Iterates through pizza elements on the page and changes their widths
+function changePizzaSizes(size) {
+    randomPizzaContainerArray =
+        document.getElementsByClassName('randomPizzaContainer');
+    for (var i = 0; i < randomPizzaContainerArray.length; i++) {
+	    /*
+	     * REQUIRED
+	     * Which variables in this function never change, and can be defined
+	     * outside this loop?
+	     */
+	    var pizzaContainerItem = randomPizzaContainerArray[i];
+		var dx = determineDx(pizzaContainerItem, size);
+		var newwidth = (pizzaContainerItem.offsetWidth + dx) + 'px';
+		pizzaContainerItem.style.width = newwidth;
+    }
+}
+
+// TODO: dx has to be calculated outside the for loop
+
+//////////////////////////////////////////////////////////////////////////////////
+
+./views/main.js:
+
+// Moves the sliding background pizzas based on scroll position
+function updatePositions() {
+	/*
+		REQUIRED
+		As I mentioned in the project review, this function can run up
+		to ten times per second.
+		What variable(s) are unchanging, and therefore can be defined
+		outside of what is essentially a loop?
+	*/
+	frame++;
+	window.performance.mark("mark_start_frame");
+
+	var items = document.getElementsByClassName('mover');
+	console.log("items: " + items);
+	console.log("items.length: " + items.length);
+
+	var scrollTop = document.body.scrollTop;
+	for (var i = 0; i < items.length; i++) {
+		var phase = Math.sin((scrollTop / 1250) + (i % 5));
+		items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+	}
+
+	// User Timing API to the rescue again. Seriously, it's worth learning.
+	// Super easy to create custom metrics.
+	window.performance.mark("mark_end_frame");
+	window.performance.measure("measure_frame_duration", "mark_start_frame", "mark_end_frame");
+	if (frame % 10 === 0) {
+		var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
+		logAverageFrame(timesToUpdatePosition);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+Critical Rendering Path for index.html
+
+SPECIFICATION
+Student identifies and performs optimizations to achieve a Mobile and Desktop PageSpeed score of 90 on index.html.
+EXCEEDS SPECIFICATION
+
+Reviewer Comments
+Excellent!
+
+///////////////////////////////////////////////////////////////////////////////
+
+Framerate for pizza.html
+
+SPECIFICATION
+Student identifies and performs optimizations ensuring a consistent frame rate
+at 60fps when scrolling in pizza.html.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+There are some spikes when I scroll.
+Please look at the code review for some tips on improvement.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Computation Efficiency for pizza.html
+
+SPECIFICATION
+Time to resize pizzas is less than 5 ms in pizza.html shown in the browser console.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+123 ms. Please look at the code review for info on how to improve.
+Note: take a look at this console. It represents 10 frames:
+Notice how there is code that runs ten times, and it never changes?
+You will want to focus on that as you refactor.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Build Tools
+
+SPECIFICATION
+Please select "Meets Specifications" if the student does not "Exceed Specifications"
+MEETS SPECIFICATION
+
+Reviewer Comments
+Check out our build tools course!
+
+Requirements to exceed the specification
+Student researches, identifies and uses build tools to automatically perform optimizations such as minification of CSS and JS and image optimizations.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Comments
+
+SPECIFICATION
+Comments in views/js/main.js for pizza.html are present and effectively explain longer code procedures.
+MEETS SPECIFICATION
+
+Reviewer Comments
+When you further optimize main.js, please write comments detailing your optimizations.
+
+This is critical not now, but in six months, when a potential employer is interviewing you, asking you about your code.
+
+The following story happened to me, and I do not wish it upon anybody:
+	Interviewer: "So, why did you write your code like this?"
+	Me: "Well, it's been a few months, so..."
+Needless to say, I did not get the job.
+
+Code is eternal. Memories are not.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Documentation
+
+SPECIFICATION
+A README file is included detailing all steps required to successfully run the application and outlines the optimizations that the student made in views/js/main.js for pizza.html.
+MEETS SPECIFICATION
+
+Reviewer Comments
+Nice job! You could also use Markdown to format, it would make your README look prettier, both in a text editor and in Github.
+https://guides.github.com/features/mastering-markdown/
+
+///////////////////////////////////////////////////////////////////////////////
+
+Additional Reviewer Comments
+
+Excellent job so far! You have a few more optimizations to make.
+
+A few things to keep in mind:
+
+* for-loops are extremely expensive operations. It runs code as many times as you tell it to, which is good, because it helps you perform one task many times, but also bad, because one unnecessary variable definition in a for loop could be unnecessarily defined hundreds of times, which could bloat up your software.
+* updatePositions() runs every time the user scrolls. Ten times per second, to be precise. Therefore you'll want to treat this like a for loop and tread carefully on what things you want to happen inside of it. Especially since you have a for-loop within the updatePositions()! In one second, updatePositions() runs ten times, therefore the for-loop runs ten times, so the code inside the for loop runs up to 280 times, in one second! That will definitely hinder performance.
+
+Keep that in mind as you refactor!
+
+Happy coding!

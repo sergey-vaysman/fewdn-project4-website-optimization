@@ -1,0 +1,34 @@
+
+Does Not Meet Specifications
+
+///////////////////////////////////////////////////////////////////////////////
+
+Critical Rendering Path for index.html
+
+SPECIFICATION
+Student identifies and performs optimizations to achieve a Mobile and Desktop PageSpeed score of 90 on index.html.
+EXCEEDS SPECIFICATION
+
+Reviewer Comments
+Solid 95/100 (mobile) and 97/100 (desktop). Well Done!
+Requirements to exceed the specification 
+Student identifies and performs optimizations to achieve a Mobile and Desktop PageSpeed score above 90 on index.html.
+
+///////////////////////////////////////////////////////////////////////////////
+
+Framerate for pizza.html
+
+SPECIFICATION
+Student identifies and performs optimizations ensuring a consistent frame rate at 60fps when scrolling in pizza.html.
+DOES NOT MEET SPECIFICATION
+
+Reviewer Comments
+Please check my code comments in the Code Review tab. Some code refactoring is required. Kindly refer to my tip in line 454.
+
+Current resizing time: 80 ms.
+
+Rubric here
+https://www.google.com/url?q=https://goo.gl/Zqjg0q&sa=D&usg=AFQjCNFVG2wIhpvOZe_GH3I1s3OR5tdc1w
+
+///////////////////////////////////////////////////////////////////////////////
+
